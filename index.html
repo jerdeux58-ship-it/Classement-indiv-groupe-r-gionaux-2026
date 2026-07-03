@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classement Championnats Régionaux</title>
+<style>
+  :root{
+    --pool: #0a3d5c;
+    --pool-deep: #062940;
+    --lane: #ffb347;
+    --lane-red: #e8543f;
+    --foam: #f4f9fb;
+    --ink: #0b2436;
+    --muted: #5c7a8c;
+    --gold: #d4af37;
+    --silver: #a8b4bb;
+    --bronze: #c07a3e;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: var(--foam);
+    color: var(--ink);
+    padding-bottom: 60px;
+  }
+  header{
+    background: linear-gradient(180deg, var(--pool) 0%, var(--pool-deep) 100%);
+    color: white;
+    padding: 28px 20px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height: 6px;
+    background: repeating-linear-gradient(90deg, var(--lane) 0 24px, var(--lane-red) 24px 48px);
+  }
+  header h1{
+    margin:0 0 4px;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+  header p{
+    margin:0;
+    font-size: 0.85rem;
+    color: #b8d4e3;
+  }
+  .badge{
+    display:inline-block;
+    margin-top:10px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  nav.tabs{
+    display:flex;
+    position: sticky;
+    top:0;
+    z-index: 10;
+    background: white;
+    border-bottom: 1px solid #dde6ea;
+  }
+  nav.tabs button{
+    flex:1;
+    padding: 14px 8px;
+    border:none;
+    background:none;
+    font-size: 0.95rem;
+    font-weight:600;
+    color: var(--muted);
+    cursor:pointer;
+    border-bottom: 3px solid transparent;
+  }
+  nav.tabs button.active{
+    color: var(--pool);
+    border-bottom: 3px solid var(--lane-red);
+  }
+
+  section{ display:none; padding: 16px 14px 4px; }
+  section.active{ display:block; }
+
+  .rulesbox{
+    background: white;
+    border-radius: 14px;
+    padding: 18px 16px;
+    margin: 16px 14px;
+    border: 1px solid #dde6ea;
+  }
+  .rulesbox h2{
+    font-size: 1.05rem;
+    margin: 0 0 10px;
+    color: var(--pool);
+  }
+  .rulesbox ul{
+    margin:0;
+    padding-left: 18px;
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+  .rulesbox li{ margin-bottom: 6px; }
+  .rulesbox table{
+    width:100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.82rem;
+  }
+  .rulesbox th, .rulesbox td{
+    text-align:center;
+    padding: 5px 4px;
+    border-bottom: 1px solid #eef2f4;
+  }
+  .rulesbox th{ color: var(--muted); font-weight:600; }
+
+  .card{
+    background:white;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    border: 1px solid #e4ebee;
+  }
+  .rank{
+    width: 32px;
+    text-align:center;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--pool);
+    flex-shrink:0;
+  }
+  .rank.r1{ color: var(--gold); }
+  .rank.r2{ color: var(--silver); }
+  .rank.r3{ color: var(--bronze); }
+  .info{ flex:1; min-width:0; }
+  .name{ font-weight:700; font-size:0.95rem; }
+  .meta{ font-size: 0.75rem; color: var(--muted); margin-top:1px; }
+  .club{
+    display:inline-block;
+    font-size: 0.65rem;
+    padding: 1px 7px;
+    border-radius: 10px;
+    margin-top: 3px;
+    font-weight:600;
+  }
+  .club.nevers{ background:#e3f0f7; color: var(--pool); }
+  .club.cosne{ background:#fdece7; color: var(--lane-red); }
+  .pts{
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--pool);
+    flex-shrink:0;
+    text-align:right;
+    min-width: 44px;
+  }
+  .pts.zero{ color: #b0473b; }
+  .dsq-tag{ font-size:0.68rem; color:#b0473b; font-weight:700; }
+
+  .section-label{
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 18px 4px 8px;
+    font-weight:700;
+  }
+  footer{
+    text-align:center;
+    font-size: 0.72rem;
+    color: var(--muted);
+    padding: 18px 20px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏊 Classement — Championnats Régionaux</h1>
+  <p>CN Nevers &amp; UCS Cosne — 3 jours de compétition</p>
+  <span class="badge">Après séries + finales — Jour 1</span>
+</header>
+
+<nav class="tabs">
+  <button class="active" onclick="showTab('regles')">Règles</button>
+  <button onclick="showTab('filles')">TC Filles</button>
+  <button onclick="showTab('garcons')">TC Garçons</button>
+</nav>
+<nav class="tabs" style="border-top:1px solid #dde6ea;">
+  <button onclick="showTab('u15filles')">U15 Filles</button>
+  <button onclick="showTab('u15garcons')">U15 Garçons</button>
+</nav>
+
+<section id="regles" class="active">
+  <div class="rulesbox">
+    <h2>📋 Comment ça marche</h2>
+    <ul>
+      <li><strong>Participation :</strong> chaque épreuve nagée rapporte <strong>5 points</strong>, quel que soit le résultat — ça valorise votre qualification aux régionaux !</li>
+      <li><strong>Finales A, B, C :</strong> si tu nages une finale, tu ajoutes des points supplémentaires selon ton classement dans cette finale (la finale C est réservée aux U15).</li>
+      <li><strong>U15 :</strong> nageurs et nageuses nés en 2011 ou 2012. Ils ont leur propre classement U15, et comptent aussi dans le classement Toutes Catégories (TC).</li>
+      <li><strong>800m / 1500m :</strong> pas de vraies finales (séries lentes le matin + rapides l'après-midi) → classement direct du 1er au dernier, barème continu de 29 à 6 points.</li>
+      <li><strong>DSQ :</strong> si tu es disqualifié(e) sur une course, tu perds les 5 points de participation de cette épreuve (0 point).</li>
+      <li>Le classement mélange les nageurs de <strong>CN Nevers</strong> et <strong>UCS Cosne</strong>, séparé filles / garçons.</li>
+      <li>Mise à jour après chaque demi-journée de compétition.</li>
+    </ul>
+    <table>
+      <tr><th>Place</th><th>Finale A</th><th>Finale B</th><th>Finale C</th></tr>
+      <tr><td>1er</td><td>29</td><td>21</td><td>13</td></tr>
+      <tr><td>2e</td><td>28</td><td>20</td><td>12</td></tr>
+      <tr><td>3e</td><td>27</td><td>19</td><td>11</td></tr>
+      <tr><td>4e</td><td>26</td><td>18</td><td>10</td></tr>
+      <tr><td>5e</td><td>25</td><td>17</td><td>9</td></tr>
+      <tr><td>6e</td><td>24</td><td>16</td><td>8</td></tr>
+      <tr><td>7e</td><td>23</td><td>15</td><td>7</td></tr>
+      <tr><td>8e</td><td>22</td><td>14</td><td>6</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="filles">
+  <div class="section-label">Toutes Catégories — Filles (14 nageuses)</div>
+  <div id="filles-list"></div>
+</section>
+
+<section id="garcons">
+  <div class="section-label">Toutes Catégories — Garçons (15 nageurs)</div>
+  <div id="garcons-list"></div>
+</section>
+
+<section id="u15filles">
+  <div class="section-label">U15 (nées 2011-2012) — Filles</div>
+  <div id="u15filles-list"></div>
+</section>
+
+<section id="u15garcons">
+  <div class="section-label">U15 (nés 2011-2012) — Garçons</div>
+  <div id="u15garcons-list"></div>
+</section>
+
+<footer>Jercoach · CN Nevers × UCS Cosne</footer>
+
+<script>
+const filles = [
+  {name:"Boulay Agathe", club:"nevers", ep:3, pts:15, year:2013, u15:false},
+  {name:"Moulenda-Perroy Axelle", club:"nevers", ep:3, pts:95, year:2008, u15:false},
+  {name:"Domenichini Elora", club:"nevers", ep:2, pts:31, year:2008, u15:false},
+  {name:"Durand Emma", club:"nevers", ep:2, pts:49, year:2008, u15:false},
+  {name:"Lebref Pauline", club:"nevers", ep:2, pts:54, year:2009, u15:false},
+  {name:"Lecrot Laureline", club:"nevers", ep:2, pts:18, year:2012, u15:true},
+  {name:"Zaouia Nelya", club:"nevers", ep:2, pts:10, year:2011, u15:true},
+  {name:"Legrand Jade", club:"cosne", ep:2, pts:10, year:2009, u15:false},
+  {name:"Cete Maylis", club:"nevers", ep:1, pts:5, year:2012, u15:true},
+  {name:"Degrave Victoire", club:"nevers", ep:1, pts:23, year:2006, u15:false},
+  {name:"Laivier Marie", club:"nevers", ep:1, pts:29, year:2007, u15:false},
+  {name:"Markiewicz Lucie", club:"nevers", ep:1, pts:34, year:2010, u15:false},
+  {name:"Legrand Line", club:"cosne", ep:1, pts:20, year:2012, u15:true},
+  {name:"Degrave Circé", club:"nevers", ep:1, pts:0, dsq:true, year:2009, u15:false},
+];
+
+const garcons = [
+  {name:"Briffaud Valentin", club:"nevers", ep:2, pts:29, year:2008, u15:false},
+  {name:"Cherraben Isaac", club:"nevers", ep:2, pts:10, year:2013, u15:false},
+  {name:"Meoli Ezechiel", club:"nevers", ep:2, pts:10, year:2012, u15:true},
+  {name:"Oudin Théo", club:"nevers", ep:2, pts:19, year:2011, u15:true},
+  {name:"Pellerin-Train Sasha", club:"nevers", ep:2, pts:40, year:2011, u15:true},
+  {name:"Laurent Eliott", club:"cosne", ep:2, pts:10, year:2011, u15:true},
+  {name:"Tournadre Ethan", club:"cosne", ep:2, pts:33, year:2012, u15:true},
+  {name:"Cherraben Adam", club:"nevers", ep:1, pts:5, year:2011, u15:true},
+  {name:"Couraud Gabriel", club:"nevers", ep:2, pts:68, year:2010, u15:false},
+  {name:"Couraud Victor", club:"nevers", ep:1, pts:30, year:2006, u15:false},
+  {name:"Desjardin-Carlu Swann", club:"nevers", ep:1, pts:33, year:2008, u15:false},
+  {name:"Garcin Etienne", club:"nevers", ep:1, pts:23, year:1995, u15:false},
+  {name:"Kambou Nabil", club:"nevers", ep:1, pts:32, year:2009, u15:false},
+  {name:"Petit Diego", club:"cosne", ep:2, pts:41, year:2012, u15:true},
+  {name:"Lamotte Dimitri", club:"nevers", ep:1, pts:31, year:2012, u15:true},
+];
+
+function render(list, elId){
+  const el = document.getElementById(elId);
+  let prevPts = null, displayRank = 1;
+  el.innerHTML = list.map((s, i) => {
+    if(prevPts !== null && s.pts !== prevPts){ displayRank = i+1; }
+    prevPts = s.pts;
+    const rankClass = displayRank===1 ? 'r1' : displayRank===2 ? 'r2' : displayRank===3 ? 'r3' : '';
+    const clubLabel = s.club === 'nevers' ? 'CN Nevers' : 'UCS Cosne';
+    const dsqTag = s.dsq ? '<div class="dsq-tag">DSQ sur une épreuve</div>' : '';
+    const u15Tag = s.u15 ? '<span class="club" style="background:#eef0e0;color:#6b7a3a;margin-left:4px;">U15</span>' : '';
+    return `<div class="card">
+      <div class="rank ${rankClass}">${displayRank}</div>
+      <div class="info">
+        <div class="name">${s.name}</div>
+        <div class="meta">${s.ep} épreuve${s.ep>1?'s':''} nagée${s.ep>1?'s':''}</div>
+        <span class="club ${s.club}">${clubLabel}</span>${u15Tag}
+        ${dsqTag}
+      </div>
+      <div class="pts ${s.pts===0?'zero':''}">${s.pts}</div>
+    </div>`;
+  }).join('');
+}
+
+function sortByPts(list){
+  return [...list].sort((a,b) => b.pts - a.pts);
+}
+
+const fillesSorted = sortByPts(filles);
+const garconsSorted = sortByPts(garcons);
+const u15Filles = sortByPts(filles.filter(s => s.u15));
+const u15Garcons = sortByPts(garcons.filter(s => s.u15));
+
+render(fillesSorted, 'filles-list');
+render(garconsSorted, 'garcons-list');
+render(u15Filles, 'u15filles-list');
+render(u15Garcons, 'u15garcons-list');
+
+function showTab(id){
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
