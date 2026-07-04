@@ -186,7 +186,7 @@
 <header>
   <h1>🏊 Classement — Championnats Régionaux</h1>
   <p>CN Nevers &amp; UCS Cosne — 3 jours de compétition</p>
-  <span class="badge">Après séries + finales — Jour 2 matin</span>
+  <span class="badge">Après séries + finales — Jour 2 complet</span>
 </header>
 
 <nav class="tabs">
@@ -250,37 +250,37 @@
 <script>
 const filles = [
   {name:"Boulay Agathe", club:"nevers", ep:5, pts:25, year:2013, u15:false},
-  {name:"Moulenda-Perroy Axelle", club:"nevers", ep:4, pts:100, year:2008, u15:false},
-  {name:"Domenichini Elora", club:"nevers", ep:4, pts:41, year:2008, u15:false},
-  {name:"Durand Emma", club:"nevers", ep:4, pts:59, year:2008, u15:false},
-  {name:"Lebref Pauline", club:"nevers", ep:4, pts:64, year:2009, u15:false},
+  {name:"Moulenda-Perroy Axelle", club:"nevers", ep:4, pts:128, year:2008, u15:false},
+  {name:"Domenichini Elora", club:"nevers", ep:4, pts:60, year:2008, u15:false},
+  {name:"Durand Emma", club:"nevers", ep:4, pts:94, year:2008, u15:false},
+  {name:"Lebref Pauline", club:"nevers", ep:4, pts:92, year:2009, u15:false},
   {name:"Lecrot Laureline", club:"nevers", ep:3, pts:23, year:2012, u15:true},
   {name:"Zaouia Nelya", club:"nevers", ep:3, pts:15, year:2011, u15:true},
   {name:"Legrand Jade", club:"cosne", ep:4, pts:20, year:2009, u15:false},
   {name:"Cete Maylis", club:"nevers", ep:2, pts:10, year:2012, u15:true},
-  {name:"Degrave Victoire", club:"nevers", ep:3, pts:33, year:2006, u15:false},
-  {name:"Laivier Marie", club:"nevers", ep:3, pts:39, year:2007, u15:false},
-  {name:"Markiewicz Lucie", club:"nevers", ep:3, pts:44, year:2010, u15:false},
-  {name:"Legrand Line", club:"cosne", ep:3, pts:30, year:2012, u15:true},
-  {name:"Degrave Circé", club:"nevers", ep:3, pts:10, dsq:true, year:2009, u15:false},
+  {name:"Degrave Victoire", club:"nevers", ep:3, pts:47, year:2006, u15:false},
+  {name:"Laivier Marie", club:"nevers", ep:3, pts:61, year:2007, u15:false},
+  {name:"Markiewicz Lucie", club:"nevers", ep:3, pts:100, year:2010, u15:false},
+  {name:"Legrand Line", club:"cosne", ep:3, pts:36, year:2012, u15:true},
+  {name:"Degrave Circé", club:"nevers", ep:3, pts:62, dsq:true, year:2009, u15:false},
 ];
 
 const garcons = [
-  {name:"Briffaud Valentin", club:"nevers", ep:3, pts:34, year:2008, u15:false},
+  {name:"Briffaud Valentin", club:"nevers", ep:3, pts:61, year:2008, u15:false},
   {name:"Cherraben Isaac", club:"nevers", ep:4, pts:20, year:2013, u15:false},
   {name:"Meoli Ezechiel", club:"nevers", ep:3, pts:15, year:2012, u15:true},
-  {name:"Oudin Théo", club:"nevers", ep:4, pts:29, year:2011, u15:true},
-  {name:"Pellerin-Train Sasha", club:"nevers", ep:3, pts:45, year:2011, u15:true},
+  {name:"Oudin Théo", club:"nevers", ep:4, pts:37, year:2011, u15:true},
+  {name:"Pellerin-Train Sasha", club:"nevers", ep:3, pts:40, dsq:true, year:2011, u15:true},
   {name:"Laurent Eliott", club:"cosne", ep:4, pts:20, year:2011, u15:true},
-  {name:"Tournadre Ethan", club:"cosne", ep:4, pts:43, year:2012, u15:true},
-  {name:"Cherraben Adam", club:"nevers", ep:2, pts:10, year:2011, u15:true},
-  {name:"Couraud Gabriel", club:"nevers", ep:3, pts:73, year:2010, u15:false},
-  {name:"Couraud Victor", club:"nevers", ep:2, pts:35, year:2006, u15:false},
-  {name:"Desjardin-Carlu Swann", club:"nevers", ep:3, pts:43, year:2008, u15:false},
-  {name:"Garcin Etienne", club:"nevers", ep:2, pts:28, year:1995, u15:false},
-  {name:"Kambou Nabil", club:"nevers", ep:2, pts:37, year:2009, u15:false},
-  {name:"Petit Diego", club:"cosne", ep:4, pts:70, year:2012, u15:true},
-  {name:"Lamotte Dimitri", club:"nevers", ep:2, pts:63, year:2012, u15:true},
+  {name:"Tournadre Ethan", club:"cosne", ep:4, pts:59, year:2012, u15:true},
+  {name:"Cherraben Adam", club:"nevers", ep:2, pts:25, year:2011, u15:true},
+  {name:"Couraud Gabriel", club:"nevers", ep:4, pts:136, year:2010, u15:false},
+  {name:"Couraud Victor", club:"nevers", ep:2, pts:55, year:2006, u15:false},
+  {name:"Desjardin-Carlu Swann", club:"nevers", ep:3, pts:68, year:2008, u15:false},
+  {name:"Garcin Etienne", club:"nevers", ep:2, pts:46, year:1995, u15:false},
+  {name:"Kambou Nabil", club:"nevers", ep:2, pts:64, year:2009, u15:false},
+  {name:"Petit Diego", club:"cosne", ep:4, pts:83, year:2012, u15:true},
+  {name:"Lamotte Dimitri", club:"nevers", ep:2, pts:56, year:2012, u15:true},
 ];
 
 function render(list, elId){
